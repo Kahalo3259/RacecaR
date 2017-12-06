@@ -30,7 +30,7 @@ public class PlayerController : MonoBehaviour
     public Rigidbody rgb;
     public GameObject respawn;
     public CheckPoints[] CP = new CheckPoints[5];
-    public GameMaster gm;
+    public GameManager gm;
 
     public GameObject bulletPoint;
     public GameObject bullet;
@@ -43,7 +43,7 @@ public class PlayerController : MonoBehaviour
     private void Start()
     {
         rgb = GetComponent<Rigidbody>();
-        gm = GameObject.Find("GameMaster").GetComponent<GameMaster>();
+        gm = GameObject.Find("GameMaster").GetComponent<GameManager>();
         player = gameObject;
 
         powerupActive = false;

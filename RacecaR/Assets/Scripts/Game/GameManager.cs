@@ -2,8 +2,14 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
-public class GameMaster : MonoBehaviour {
+public class GameManager : MonoBehaviour
+{
+    public static GameManager instance;
+
+    public bool isRunning;
+    public bool isPaused;
 
     public Text timerText;
     float timer;
@@ -14,7 +20,17 @@ public class GameMaster : MonoBehaviour {
     public float inverseCountdown;
     public bool inverseActive = false;
 
-    void Start()
+    void Awake()
+    {
+        if (instance == null)
+            instance = this;
+        else
+            Destroy(gameObject);
+
+        DontDestroyOnLoad(gameObject);
+    }
+
+    /*void Start()
     {
         inverseCountdown = Random.Range(20f, 25f);
         timerText = GameObject.Find("Timer").GetComponent<Text>();
@@ -80,8 +96,22 @@ public class GameMaster : MonoBehaviour {
                 resetCountdown = false;
             }
 
-        }*/
+        }
 
 
+    }*/
+
+    public void StartGame()
+    {
+        isRunning = !isRunning;
+        SceneManager.LoadScene("TestScene");
+        UIManager.instance.InstantiateMenus();
+    }
+
+    public void EndGame()
+    {
+        isRunning = !isRunning;
+        SceneManager.LoadScene("Main");
+        UIManager.instance.InstantiateMenus();
     }
 }

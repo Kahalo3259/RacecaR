@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class Spedometer : MonoBehaviour {
+public class Speedometer : MonoBehaviour {
 
     public Text text;
     public PlayerController player;
