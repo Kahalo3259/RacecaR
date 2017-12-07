@@ -30,7 +30,6 @@ public class PlayerController : MonoBehaviour
     public Rigidbody rgb;
     public GameObject respawn;
     public CheckPoints[] CP = new CheckPoints[5];
-    public GameManager gm;
 
     public GameObject bulletPoint;
     public GameObject bullet;
@@ -43,7 +42,6 @@ public class PlayerController : MonoBehaviour
     private void Start()
     {
         rgb = GetComponent<Rigidbody>();
-        gm = GameObject.Find("GameMaster").GetComponent<GameManager>();
         player = gameObject;
 
         powerupActive = false;
@@ -53,78 +51,80 @@ public class PlayerController : MonoBehaviour
     // Update  is called once per frame
     void Update()
     {
-        Debug.Log(reverse);
-
-        if(turnSpeed > turnLimit)
+        if (!GameManager.instance.isPaused)
         {
-            turnSpeed = turnLimit;
-        }
+            Debug.Log("Reverse Active: " + reverse);
 
-        if (turnSpeed < -turnLimit)
-        {
-            turnSpeed = -turnLimit;
-        }
-
-        float currentTurn = turnSpeed;
-
-        if (reverse == true) 
-        {
-            currentTurn = -currentTurn;
-        }
-        else
-        {
-            currentTurn = currentTurn;
-        }
-
-        if (win == false)
-        {
-            gameObject.transform.Translate(0, 0, currentSpeed * Time.deltaTime);
-            gameObject.transform.Rotate(0, currentTurn * Time.deltaTime, 0);
-
-            switch (playerID)
+            if (turnSpeed > turnLimit)
             {
-                case 1:
-                {
+                turnSpeed = turnLimit;
+            }
 
-                        //Turns player
-                        if (Input.GetKey(KeyCode.A))
+            if (turnSpeed < -turnLimit)
+            {
+                turnSpeed = -turnLimit;
+            }
+
+            float currentTurn = turnSpeed;
+
+            if (reverse == true)
+            {
+                currentTurn = -currentTurn;
+            }
+            else
+            {
+                currentTurn = currentTurn;
+            }
+
+            if (win == false)
+            {
+                gameObject.transform.Translate(0, 0, currentSpeed * Time.deltaTime);
+                gameObject.transform.Rotate(0, currentTurn * Time.deltaTime, 0);
+
+                switch (playerID)
+                {
+                    case 1:
                         {
-                            turnSpeed -= turnRate;
-                        }
-                        else
-                            if (Input.GetKey(KeyCode.D))
-                        {
-                            turnSpeed += turnRate;
-                        }
-                        else
-                        {
-                            //turnSpeed = 0;
-                            if (turnSpeed > 0)
+
+                            //Turns player
+                            if (Input.GetKey(KeyCode.A))
                             {
                                 turnSpeed -= turnRate;
-                                if (turnSpeed <= 0)
-                                {
-                                    turnSpeed = 0;
-                                }
                             }
-                            if (turnSpeed < 0)
+                            else
+                                if (Input.GetKey(KeyCode.D))
                             {
                                 turnSpeed += turnRate;
-                                if (turnSpeed >= 0)
+                            }
+                            else
+                            {
+                                //turnSpeed = 0;
+                                if (turnSpeed > 0)
                                 {
-                                    turnSpeed = 0;
+                                    turnSpeed -= turnRate;
+                                    if (turnSpeed <= 0)
+                                    {
+                                        turnSpeed = 0;
+                                    }
+                                }
+                                if (turnSpeed < 0)
+                                {
+                                    turnSpeed += turnRate;
+                                    if (turnSpeed >= 0)
+                                    {
+                                        turnSpeed = 0;
+                                    }
                                 }
                             }
-                        }
 
 
-                        //Accelerate and Reverse
-                        if (Input.GetKey(KeyCode.W))
-                        {
-                            Accelerate();
-                        }
-                        else 
-                            if(Input.GetKey(KeyCode.S))
+                            //Accelerate and Reverse
+                            if (Input.GetKey(KeyCode.W))
+                            {
+                                Accelerate();
+                            }
+                            else
+                                if (Input.GetKey(KeyCode.S))
                             {
                                 Reverse();
                             }
@@ -132,90 +132,91 @@ public class PlayerController : MonoBehaviour
                             {
                                 Decelerate();
                             }
-                    break;
+                            break;
+                        }
+
+                    case 2:
+                        {
+                            //Turns player
+                            if (Input.GetKey(KeyCode.LeftArrow))
+                            {
+                                turnSpeed -= turnRate;
+                            }
+                            else
+                                if (Input.GetKey(KeyCode.RightArrow))
+                            {
+                                turnSpeed += turnRate;
+                            }
+                            else
+                            {
+                                turnSpeed = 0;
+                                if (turnSpeed > 0)
+                                {
+                                    turnSpeed -= turnRate;
+                                }
+                                if (turnSpeed < 0)
+                                {
+                                    turnSpeed += turnRate;
+                                }
+                            }
+
+                            //Accelerate and Reverse
+                            if (Input.GetKey(KeyCode.UpArrow))
+                            {
+                                Accelerate();
+                            }
+                            else
+                                if (Input.GetKey(KeyCode.DownArrow))
+                            {
+                                Reverse();
+                            }
+                            else
+                            {
+                                Decelerate();
+                            }
+
+                            break;
+                        }
                 }
 
-                case 2:
+                if (lap >= lapLimit)
                 {
-                        //Turns player
-                        if (Input.GetKey(KeyCode.LeftArrow))
-                        {
-                            turnSpeed -= turnRate;
-                        }
-                        else
-                            if (Input.GetKey(KeyCode.RightArrow))
-                        {
-                            turnSpeed += turnRate;
-                        }
-                        else
-                        {
-                            turnSpeed = 0;
-                            if (turnSpeed > 0)
-                            {
-                                turnSpeed -= turnRate;
-                            }
-                            if (turnSpeed < 0)
-                            {
-                                turnSpeed += turnRate;
-                            }
-                        }
-
-                        //Accelerate and Reverse
-                        if (Input.GetKey(KeyCode.UpArrow))
-                        {
-                            Accelerate();
-                        }
-                        else
-                            if (Input.GetKey(KeyCode.DownArrow))
-                            {
-                                Reverse();
-                            }
-                            else
-                            {
-                                Decelerate();
-                            }
-
-                        break;
-                    }
+                    win = true;
+                }
             }
 
-            if (lap >= lapLimit)
+            //toggle powerup
+            if (pickupCount > 0 && Input.GetKeyDown(KeyCode.E))
             {
-                win = true;
+                powerupActive = true;
             }
-        }
 
-        //toggle powerup
-        if (pickupCount > 0 && Input.GetKeyDown(KeyCode.E))
-        {
-            powerupActive = true;
-        }
-
-        if (powerupActive)
-        {
-            if (pickupCount == 1)
+            if (powerupActive)
             {
-                Immunity();
+                if (pickupCount == 1)
+                {
+                    Immunity();
+                }
+
+                if (pickupCount == 2)
+                {
+                    Shoot();
+                }
+
+                if (pickupCount == 3)
+                {
+                    Mine();
+                }
             }
 
-            if(pickupCount == 2)
+            if (GameManager.instance.inverseActive && !immune)
             {
-                Shoot();
+                reverse = true;
             }
-
-            if(pickupCount == 3)
+            else
             {
-                Mine();
+                reverse = false;
             }
-        }
-
-        if(gm.inverseActive && !immune)
-        {
-            reverse = true;
-        }
-        else
-        {
-            reverse = false;
         }
     }
 

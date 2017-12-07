@@ -30,79 +30,85 @@ public class GameManager : MonoBehaviour
         DontDestroyOnLoad(gameObject);
     }
 
-    /*void Start()
-    {
-        inverseCountdown = Random.Range(20f, 25f);
-        timerText = GameObject.Find("Timer").GetComponent<Text>();
-    }
-
     void Update()
     {
-        timer = timer + 1 * Time.deltaTime;
-        timerText.text = "" + timer;
-
-        if (inverseActive)
+        if (isRunning && !isPaused)
         {
-            inverseDuration -= 1 * Time.deltaTime;
+            timer = timer + 1 * Time.deltaTime;
+            timerText.text = "" + timer;
 
-            player.reverse = true;
-            player2.reverse = true;
-
-            if(inverseDuration <= 0)
+            if (inverseActive)
             {
-                inverseCountdown = Random.Range(15f, 20f);
-                inverseActive = false;
+                inverseDuration -= 1 * Time.deltaTime;
+
+                player.reverse = true;
+                player2.reverse = true;
+
+                if (inverseDuration <= 0)
+                {
+                    inverseCountdown = Random.Range(15f, 20f);
+                    inverseActive = false;
+                }
             }
-        }
 
-        if (!inverseActive)
-        {
-            inverseCountdown -= 1 * Time.deltaTime;
-
-            player.reverse = false;
-            player2.reverse = false;
-
-            if (inverseCountdown <= 0)
+            if (!inverseActive)
             {
-                inverseDuration = Random.Range(4f, 10f);
-                inverseActive = true;
+                inverseCountdown -= 1 * Time.deltaTime;
+
+                player.reverse = false;
+                player2.reverse = false;
+
+                if (inverseCountdown <= 0)
+                {
+                    inverseDuration = Random.Range(4f, 10f);
+                    inverseActive = true;
+                }
             }
-        }
 
-        /*if(inverseCountdown <= 0)
-        {
-            resetDuration = true;
-
-            if (resetDuration)
+            /*if (inverseCountdown <= 0)
             {
-                inverseDuration = Random.Range(4f, 10f);
-                resetDuration = false;
+                resetDuration = true;
+
+                if (resetDuration)
+                {
+                    inverseDuration = Random.Range(4f, 10f);
+                    resetDuration = false;
+                }
             }
-        }
 
-        if(inverseDuration <= 0)
-        {
-            resetCountdown = true;
-
-            if (resetCountdown)
+            if (inverseDuration <= 0)
             {
-                inverseCountdown = Random.Range(4f, 10f);
-                resetCountdown = false;
-            }
+                resetCountdown = true;
+
+                if (resetCountdown)
+                {
+                    inverseCountdown = Random.Range(4f, 10f);
+                    resetCountdown = false;
+                }
+            }*/
         }
-    }*/
+    }
 
     public void StartGame()
     {
         isRunning = !isRunning;
-        SceneManager.LoadScene("TestScene");
-        UIManager.instance.InstantiateMenus();
+        SceneManager.LoadScene("Level 1");
+        //UIManager.instance.InstantiateMenus();
+
+        initializeValues();
     }
 
     public void EndGame()
     {
         isRunning = !isRunning;
+        isPaused = false;
         SceneManager.LoadScene("Main");
-        UIManager.instance.InstantiateMenus();
+        //UIManager.instance.InstantiateMenus();
+    }
+
+    public void initializeValues()
+    {
+        inverseCountdown = Random.Range(20f, 25f);
+        timerText = GameObject.Find("Timer").GetComponent<Text>();
     }
 }

@@ -21,7 +21,6 @@ GameObject:
   - component: {fileID: 4191662118141738}
   - component: {fileID: 65766184366124266}
   - component: {fileID: 114828231156694310}
-  - component: {fileID: 114561834268906266}
   m_Layer: 0
   m_Name: CheckPoint
   m_TagString: Respawn
@@ -54,20 +53,6 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: -1.5, z: 0}
---- !u!114 &114561834268906266
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1828391688776010}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 527915376077f1f47971bc9f8cd42fcb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  PC: {fileID: 0}
-  player: {fileID: 0}
-  active: 0
 --- !u!114 &114828231156694310
 MonoBehaviour:
   m_ObjectHideFlags: 1
