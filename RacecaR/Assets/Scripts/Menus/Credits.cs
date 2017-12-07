@@ -8,6 +8,7 @@ public class Credits : MonoBehaviour
     public Text creditsText;
 
     public Button returnButton;
+    public Button settingsButton;
 
 	// Use this for initialization
 	void Start ()
@@ -17,10 +18,16 @@ public class Credits : MonoBehaviour
             "";
 
         returnButton.onClick.AddListener(onReturn);
-	}
+        settingsButton.onClick.AddListener(onSettings);
+    }
 	
 	void onReturn()
     {
         UIManager.instance.ChangeMenu(Menus.Main);
+    }
+
+    void onSettings()
+    {
+        UIManager.instance.ChangeMenu(Menus.Settings);
     }
 }

@@ -8,6 +8,7 @@ public class Main : MonoBehaviour
     public Button startButton;
     public Button creditsButton;
     public Button quitButton;
+    public Button settingsButton;
 
     public Text instructionsKeyText;
 
@@ -16,10 +17,10 @@ public class Main : MonoBehaviour
     {
         startButton.onClick.AddListener(onStart);
         creditsButton.onClick.AddListener(onCredits);
+        settingsButton.onClick.AddListener(onSettings);
         quitButton.onClick.AddListener(onQuit);
 
         instructionsKeyText.text = "I | Instructions";
-		
 	}
 	
 	// Update is called once per frame
@@ -31,13 +32,18 @@ public class Main : MonoBehaviour
 
     void onStart()
     {
-        //UIManager.instance.ChangeMenu(Menus.StageSelection);
+        //UIManager.instance.ChangeMenu(Menus.VehicleSelection);
         GameManager.instance.StartGame();
     }
 
     void onCredits()
     {
         UIManager.instance.ChangeMenu(Menus.Credits);
+    }
+
+    void onSettings()
+    {
+        UIManager.instance.ChangeMenu(Menus.Settings);
     }
 
     void onQuit()

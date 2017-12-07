@@ -7,6 +7,7 @@ public class Pause : MonoBehaviour
 {
     public Button returnButton;
     public Button quitButton;
+    public Button settingsButton;
 
     public Text instructionsKeyText;
 
@@ -14,6 +15,7 @@ public class Pause : MonoBehaviour
 	void Start ()
     {
         returnButton.onClick.AddListener(onReturn);
+        settingsButton.onClick.AddListener(onSettings);
         quitButton.onClick.AddListener(onQuit);
 
         instructionsKeyText.text = "I | Instructions";
@@ -29,6 +31,11 @@ public class Pause : MonoBehaviour
     void onReturn()
     {
         GameManager.instance.EndGame();
+    }
+
+    void onSettings()
+    {
+        UIManager.instance.ChangeMenu(Menus.Settings);
     }
 
     void onQuit()

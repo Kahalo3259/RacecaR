@@ -166,7 +166,7 @@ Prefab:
         type: 2}
       propertyPath: currentSceneMenus.Array.data[1]
       value: 
-      objectReference: {fileID: 1636167380259882, guid: d66bd5caf16297549a9836d3c5f5cea5,
+      objectReference: {fileID: 1097104886701862, guid: d66bd5caf16297549a9836d3c5f5cea5,
         type: 2}
     - target: {fileID: 114758520964177636, guid: 473a0c28c1bf6c942ab182d89a0610db,
         type: 2}
@@ -283,8 +283,8 @@ RectTransform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 978177884}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 482, y: 301.5, z: 0}
-  m_LocalScale: {x: 1.205, y: 1.205, z: 1.205}
+  m_LocalPosition: {x: 481.5, y: 301, z: 0}
+  m_LocalScale: {x: 1.20375, y: 1.20375, z: 1.20375}
   m_Children:
   - {fileID: 1576514156}
   - {fileID: 1831274908}
@@ -389,6 +389,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gameManager: {fileID: 1225311893067492, guid: c67bf21d670eb5b468f815f69fd4bc43,
+    type: 2}
+  soundManager: {fileID: 1356944765647646, guid: 08fb71b1d031bdc4f81cdf38f6f35320,
     type: 2}
 --- !u!1 &1398103419
 GameObject:

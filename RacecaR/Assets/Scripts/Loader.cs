@@ -5,14 +5,14 @@ using UnityEngine;
 public class Loader : MonoBehaviour
 {
     public GameObject gameManager;
-    //public GameObject uiManager;
+    public GameObject soundManager;
 
     void Awake()
     {
         if (GameManager.instance == null)
             Instantiate(gameManager);
 
-        /*if (UIManager.instance == null)
-            Instantiate(uiManager);*/
+        if (SoundManager.instance == null)
+            Instantiate(soundManager);
     }
 }

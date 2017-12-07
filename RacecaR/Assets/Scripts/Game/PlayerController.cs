@@ -49,6 +49,7 @@ public class PlayerController : MonoBehaviour
         powerupActive = false;
         immune = false;
     }
+
     // Update  is called once per frame
     void Update()
     {
@@ -159,7 +160,6 @@ public class PlayerController : MonoBehaviour
                             }
                         }
 
-
                         //Accelerate and Reverse
                         if (Input.GetKey(KeyCode.UpArrow))
                         {
@@ -209,8 +209,6 @@ public class PlayerController : MonoBehaviour
             }
         }
 
-
-
         if(gm.inverseActive && !immune)
         {
             reverse = true;
@@ -247,7 +245,6 @@ public class PlayerController : MonoBehaviour
     void Accelerate()
     {
         float maxSpeed;
-        
 
         maxSpeed = topSpeed;
 
@@ -257,7 +254,6 @@ public class PlayerController : MonoBehaviour
         {
             currentSpeed = maxSpeed;
         }
-
 
         //rgb.AddForce(transform.forward * speed);
     }
@@ -331,7 +327,7 @@ public class PlayerController : MonoBehaviour
             burst = 5;
         }
 
-           powerupActive = false;
+        powerupActive = false;
     }
 
     void Mine()
