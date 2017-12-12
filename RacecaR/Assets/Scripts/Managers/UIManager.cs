@@ -38,7 +38,7 @@ public class UIManager : MonoBehaviour
     // Use this for initialization
     void Start ()
     {
-        InstantiateMenus();
+
     }
 
     // Update is called once per frame

@@ -30,6 +30,11 @@ public class GameManager : MonoBehaviour
         DontDestroyOnLoad(gameObject);
     }
 
+    void Start()
+    {
+        UIManager.instance.InstantiateMenus();   
+    }
+
     void Update()
     {
         if (isRunning && !isPaused)
@@ -91,24 +96,40 @@ public class GameManager : MonoBehaviour
 
     public void StartGame()
     {
-        isRunning = !isRunning;
-        SceneManager.LoadScene("Level 1");
-        //UIManager.instance.InstantiateMenus();
-
-        initializeValues();
+        StartCoroutine(LoadSceneAsync("Level 1"));
     }
 
     public void EndGame()
     {
-        isRunning = !isRunning;
         isPaused = false;
-        SceneManager.LoadScene("Main");
-        //UIManager.instance.InstantiateMenus();
+        isRunning = !isRunning;
+        StartCoroutine(LoadSceneAsync("Main"));
+    }
+
+    IEnumerator LoadSceneAsync(string sceneName)
+    {
+        // The Application loads the Scene in the background at the same time as the current Scene.
+        //This is particularly good for creating loading screens. You could also load the Scene by build //number.
+        AsyncOperation asyncLoad = SceneManager.LoadSceneAsync(sceneName);
+
+        //Wait until the last operation fully loads to return anything
+        while (!asyncLoad.isDone)
+            yield return null;
+
+        if (sceneName != "Main")
+        {
+            initializeValues();
+            isRunning = !isRunning;
+        }
+
+        UIManager.instance.InstantiateMenus();
     }
 
     public void initializeValues()
     {
         inverseCountdown = Random.Range(20f, 25f);
         timerText = GameObject.Find("Timer").GetComponent<Text>();
+        player = GameObject.Find("Player").GetComponent<PlayerController>();
+        player2 = GameObject.Find("Player2").GetComponent<PlayerController>();
     }
 }
